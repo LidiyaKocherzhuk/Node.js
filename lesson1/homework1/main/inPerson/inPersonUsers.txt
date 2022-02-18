@@ -1,0 +1,9 @@
+name=Vasiya
+city=Lviv
+name=Olha
+age=25
+city=Kiev
+name=Kateryna
+age=12
+city=Odesa
+age=35

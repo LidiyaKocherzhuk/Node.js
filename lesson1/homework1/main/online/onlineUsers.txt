@@ -1,0 +1,6 @@
+name=Petro
+age=40
+city=Rivne
+city=Kiev
+name=Roman
+age=15
