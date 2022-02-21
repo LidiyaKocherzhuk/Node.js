@@ -28,30 +28,15 @@ app.set("views", path.join(__dirname, "static"));
 
 let users = [
     {
-        firstName: 'Glenna',
-        lastName: 'Mcmillan',
-        email: 'rexyrodi@mailinator.com',
-        password: 'Ducimus dolorum inc',
-        age: 75,
-        city: 'Rivne'
-    },
-    {
-        firstName: 'Yolanda',
-        lastName: 'Talley',
-        email: 'vome@mailinator.com',
-        password: 'Exercitation minus e',
+        firstName: "firstName",
+        lastName: "lastName",
+        email: "email@uuu.o",
+        password: "password",
         age: 25,
-        city: 'Kiev'
+        city: "city",
+        id:1
     },
-    {
-        firstName: 'Uta',
-        lastName: 'Short',
-        email: 'kugoreda@mailinator.com',
-        password: 'Sit dolorum odit est',
-        age: 32,
-        city: 'Lviv'
-    }
-];
+]
 let error = ``;
 
 
@@ -59,12 +44,12 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", ({body}, res) => {
 
-    includeEmail(users, req.body.email, res);
-    users.push(req.body);
+    includeEmail(users, body.email, res);
+    body.id = users.length ? users[users.length-1].id + 1 : 1;
+    users.push(body);
     res.redirect("/users");
-
 });
 
 app.get("/users", (req, res) => {
@@ -80,7 +65,7 @@ app.get("/users", (req, res) => {
 app.get("/users/:userId", (req, res) => {
 
     const {userId} = req.params;
-    const user = users.find((user, id) => (id + 1).toString() === userId);
+    const user = users.find(user => user.id.toString() === userId);
     if (!user) {
         error = `Not found user with ${userId} id !!!`;
         res.redirect("/error");
@@ -89,34 +74,23 @@ app.get("/users/:userId", (req, res) => {
 
 });
 
-//<CLASSWORK>
-// Необхідно розширити ваше ДЗ:
-//     - додайте ендпоінт signIn який буде приймати email і password і якщо все вірно то редірект
-//     на сторінку цього
-
 app.get("/signIn", (req, res) => {
     res.render("signIn");
 });
 
 app.post("/signIn", ({body}, res) => {
 
-    const userId = users.find((user, id) => {
-        if (user.email === body.email && user.password === body.password) {
-            return id;
-        }
-    });
+    const user = users.find(user => user.email === body.email && user.password === body.password);
 
-    if (!userId) {
+    if (!user) {
         error = 'Wrong email or password!';
         res.redirect('/error');
         return;
     }
 
-    res.redirect(`/users/${userId}`);
+    res.redirect(`/users/${user.id}`);
 
 })
-
-// </CLASSWORK>
 
 app.get("/error", (req, res) => {
     res.render("error", {error});
@@ -140,13 +114,17 @@ const includeEmail = (arr, email, res) => {
 
 const queryFilter = (query, res) => {
 
-    let filteredUsers = [...users];
+    let filteredUsers = users;
 
     if (query.city) {
         filteredUsers = filteredUsers.filter(item => item.city === query.city);
     }
     if (query.age) {
         filteredUsers = filteredUsers.filter(item => item.age.toString() === query.age);
+    }
+    if (!filteredUsers.length) {
+        error = "Not Found";
+        res.redirect("/error");
     }
 
     res.render("users", {users:filteredUsers});
