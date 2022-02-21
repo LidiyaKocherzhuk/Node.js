@@ -13,7 +13,7 @@ class usersController {
     userId({params}, res) {
 
         const {userId} = params;
-        const user = users.find((user, id) => (id + 1).toString() === userId);
+        const user = users.find(user => user.id.toString() === userId)
         if (!user) {
             const error = `Not found user with ${userId} id !!!`;
             res.redirect(`/error?error=${error}`);

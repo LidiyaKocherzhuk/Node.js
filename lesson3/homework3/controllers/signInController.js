@@ -3,9 +3,7 @@ const users = require("../db/users");
 class signInController {
 
     signInEmailPassword({user}, res) {
-
-        console.log(user)
-        // res.redirect(`/user_id?user=${user}`);
+        res.redirect(`/users/${user.id}`);
     }
 
 }

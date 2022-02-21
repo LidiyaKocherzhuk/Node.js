@@ -1,20 +1,19 @@
 const users = require("../db/users");
 
-function includeEmail (req, res, next) {
+function includeEmail(req, res, next) {
     try {
 
-        const userId = users.find(user =>
+        const user = users.find(user =>
             user.email === req.body.email && user.password === req.body.password);
 
-        if (!userId) {
-            throw new Error("Not Found email or password!");
+        if (!user) {
+            throw new Error("Not Found user!");
         }
-        console.log(userId);
-        req.user = userId;
-        next();
-    }
 
-    catch (err) {
+        req.user = user;
+        next();
+
+    } catch (err) {
         res.redirect(`/error?error=${err.message}`);
     }
 
