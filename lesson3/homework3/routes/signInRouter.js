@@ -1,5 +1,4 @@
 const {Router} = require("express");
-const users = require("../db/users");
 const signInController = require("../controllers/signInController");
 const includeEmail = require("../middleware/signInMiddleware");
 

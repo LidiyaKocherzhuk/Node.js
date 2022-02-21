@@ -25,7 +25,7 @@ class usersController {
 
 const filteredUsers = (query, res) => {
 
-    let filteredUsers = [...users];
+    let filteredUsers = users;
 
     if (query.city) {
         filteredUsers = filteredUsers.filter(item => item.city === query.city);

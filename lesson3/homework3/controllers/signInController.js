@@ -1,4 +1,3 @@
-const users = require("../db/users");
 
 class signInController {
 
