@@ -1,7 +1,7 @@
 const express = require("express");
 const {engine} = require("express-handlebars");
 const path = require("path");
-const {use} = require("express/lib/router");
+
 const apiRoutes = require("./routes/apiRoutes");
 
 const app = express();

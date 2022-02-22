@@ -2,17 +2,20 @@ const users = require("../db/users");
 
 class usersController {
 
-    usersQuery({query}, res) {
+    usersQuery(req, res) {
+
+        const {query} = req
         if (Object.keys(query).length) {
             filteredUsers(query, res);
             return;
         }
         res.render("users", {users});
+
     }
 
-    userId({params}, res) {
+    userId(req, res) {
 
-        const {userId} = params;
+        const {userId} = req.params;
         const user = users.find(user => user.id.toString() === userId)
         if (!user) {
             const error = `Not found user with ${userId} id !!!`;

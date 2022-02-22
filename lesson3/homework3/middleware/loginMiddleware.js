@@ -1,11 +1,11 @@
 const users = require("../db/users");
 
-const includeEmail = ({body}, res, next) => {
+const includeEmail = (req, res, next) => {
 
     try {
 
         users.forEach(item => {
-            if (item.email === body.email) {
+            if (item.email === req.body.email) {
                 throw new Error("Not valid")
             }
             next();
@@ -17,10 +17,10 @@ const includeEmail = ({body}, res, next) => {
 
 };
 
-const includeAll = ({body}, res, next) => {
+const includeAll = (req, res, next) => {
     try {
 
-        const {firstName, lastName, email, password, age, city} = body;
+        const {firstName, lastName, email, password, age, city} = req.body;
         if (!firstName || !lastName) {
             throw new Error("Must be firstName and lastName!")
         }

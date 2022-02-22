@@ -1,8 +1,8 @@
 
 class signInController {
 
-    signInEmailPassword({user}, res) {
-        res.redirect(`/users/${user.id}`);
+    signInEmailPassword(req, res) {
+        res.redirect(`/users/${req.user.id}`);
     }
 
 }

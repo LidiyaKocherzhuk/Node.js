@@ -9,9 +9,9 @@ routes.use("/login", loginRouter);
 routes.use("/users", usersRouter);
 routes.use("/signIn", signInRouter);
 
-routes.get("/error", ({query}, res) => {
-    if (Object.keys(query).length) {
-        res.render("error", {error: query.error});
+routes.get("/error", (req, res) => {
+    if (Object.keys(req.query).length) {
+        res.render("error", {error: req.query.error});
     }
 });
 

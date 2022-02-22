@@ -2,9 +2,9 @@ const users = require("../db/users");
 
 class loginController {
 
-    loginUser({body}, res) {
-        body.id = users.length ? users[users.length-1].id + 1 : 1;
-        users.push(body);
+    loginUser(req, res) {
+        req.body.id = users.length ? users[users.length-1].id + 1 : 1;
+        users.push(req.body);
         res.redirect("/users");
     }
 
