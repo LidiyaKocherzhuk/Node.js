@@ -96,9 +96,6 @@ app.get("/error", (req, res) => {
     res.render("error", {error});
 });
 
-app.listen(3100, () => {
-    console.log("Server has started on PORT 3100");
-});
 
 
 const includeEmail = (arr, email, res) => {
@@ -131,3 +128,6 @@ const queryFilter = (query, res) => {
 
 }
 
+app.listen(3100, () => {
+    console.log("Server has started on PORT 3100");
+});
