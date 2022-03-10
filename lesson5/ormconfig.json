@@ -1,0 +1,21 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "LiDiYa",
+  "database": "lessFive",
+  "synchronize": false,
+  "logging": false,
+  "entities": [
+    "src/entity/**/*.ts"
+  ],
+  "migrations": [
+    "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  }
+}

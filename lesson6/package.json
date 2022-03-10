@@ -6,20 +6,21 @@
     "watch": [
       "src"
     ],
-    "ext": "ts,json",
+    "ext": "js,ts,json",
     "ignore": [
       "src/**/*.spec.ts"
     ],
     "exec": "ts-node ./src/app.ts"
   },
-  "main": "src/app.js",
+  "main": "src/app.ts",
   "scripts": {
     "start": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
+
     "lint": "eslint --cache --ext .js,.ts src",
     "lint:fix": "npm run lint -- --fix",
 
     "typeorm": "node -r ts-node/register ./node_modules/typeorm/cli.js",
-    "migration:generate": "typeorm migration:create -n ",
+    "migration:generate": "typeorm migration:create -n",
     "migration:run": "npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert"
   },
@@ -43,6 +44,7 @@
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",
     "ts-node": "^10.5.0",
-    "tsc-watch": "^4.6.0"
+    "tsc-watch": "^4.6.0",
+    "concurrently": "^7.0.0"
   }
 }
