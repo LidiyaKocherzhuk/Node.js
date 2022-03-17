@@ -5,6 +5,7 @@ import {
 import { CommonFields } from './commonFields';
 import { UserEntity } from './userEntity';
 import { PostEntity } from './postEntity';
+import { config } from '../config/config';
 
 export interface IComment {
     text: string;
@@ -14,7 +15,7 @@ export interface IComment {
     postId?: number;
 }
 
-@Entity('comments', { database: 'lessFive' })
+@Entity('comments', { database: config.MYSQL_DATABASE_NAME })
 export class CommentEntity extends CommonFields implements IComment {
     @Column({
         type: 'varchar',

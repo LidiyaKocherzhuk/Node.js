@@ -4,7 +4,7 @@
   "port": 3306,
   "username": "root",
   "password": "LiDiYa",
-  "database": "lessFive",
+  "database": "okten",
   "synchronize": false,
   "logging": false,
   "entities": [

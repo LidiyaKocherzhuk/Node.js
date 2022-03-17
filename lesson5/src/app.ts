@@ -4,7 +4,6 @@ import { createConnection, getManager } from 'typeorm';
 import { UserEntity } from './entity/userEntity';
 import { PostEntity } from './entity/postEntity';
 import { CommentEntity } from './entity/commentEntity';
-// import { CommentEntity } from './entity/commentEntity';
 
 const app = express();
 app.use(express.json());
@@ -94,9 +93,9 @@ app.get('/comments/:userId', async (req, res) => {
     try {
         const comments = await getManager().getRepository(CommentEntity)
             .createQueryBuilder('comment')
-            .where('comment.authorId = :id', { id: +req.params.userId })
-            .leftJoinAndSelect('comment.user', 'user')
-            .leftJoinAndSelect('comment.post', 'post')
+            .where('comments.authorId = :id', { id: +req.params.userId })
+            .leftJoinAndSelect('comments.user', 'user')
+            .leftJoinAndSelect('comments.post', 'post')
             .getMany();
         res.json(comments);
     } catch (err) {
