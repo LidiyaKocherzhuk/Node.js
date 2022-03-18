@@ -14,7 +14,7 @@ export interface IComment {
     postId?: number;
 }
 
-@Entity('comments', { database: 'lessFive' })
+@Entity('comments', { database: 'okten' })
 export class CommentEntity extends CommonFields implements IComment {
     @Column({
         type: 'varchar',

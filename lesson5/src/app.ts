@@ -1,13 +1,11 @@
 import express, { Request, Response } from 'express';
 import { createConnection, getManager } from 'typeorm';
 
-import { UserEntity } from './entity/userEntity';
-import { PostEntity } from './entity/postEntity';
-import { CommentEntity } from './entity/commentEntity';
+import { CommentEntity, PostEntity, UserEntity } from './entity';
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/posts', async (req: Request, res: Response) => {
     try {
@@ -92,7 +90,7 @@ app.patch('/posts/:userId', async (req, res) => {
 app.get('/comments/:userId', async (req, res) => {
     try {
         const comments = await getManager().getRepository(CommentEntity)
-            .createQueryBuilder('comment')
+            .createQueryBuilder('comments')
             .where('comments.authorId = :id', { id: +req.params.userId })
             .leftJoinAndSelect('comments.user', 'user')
             .leftJoinAndSelect('comments.post', 'post')
@@ -100,6 +98,18 @@ app.get('/comments/:userId', async (req, res) => {
         res.json(comments);
     } catch (err) {
         console.log(err);
+        res.json(err);
+    }
+});
+
+app.patch('/comments/action', async (req:Request, res:Response) => {
+    try {
+        const { commentId, like, dislike } = req.body;
+        const updateLikeDislike = await getManager().getRepository(CommentEntity)
+            .update({ authorId: commentId }, { like, dislike });
+        res.json(updateLikeDislike);
+    } catch (err) {
+        res.json(err);
     }
 });
 

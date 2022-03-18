@@ -12,7 +12,7 @@ export interface IPost {
     userId: number;
 }
 
-@Entity('posts', { database: 'lessFive' })
+@Entity('posts', { database: 'okten' })
 export class PostEntity extends CommonFields implements IPost {
     @Column({
         type: 'varchar',

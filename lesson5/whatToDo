@@ -18,3 +18,7 @@
 Завдань багато тому я думаю це буде вам і на практичну
 P.S якщо зробите всі завдання до 6 то це вже супер
 
+
+  "start": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
+"npm run watch:server"
+
