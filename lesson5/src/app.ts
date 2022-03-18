@@ -31,7 +31,7 @@ app.get('/users/:id', async (req, res) => {
 app.post('/users', async (req: Request, res: Response) => {
     try {
         const createUser = await getManager().getRepository(UserEntity).save(req.body);
-        res.status(200).json(createUser);
+        res.status(201).json(createUser);
     } catch (err) {
         res.json(err);
     }
@@ -45,7 +45,7 @@ app.patch('/users/:id', async (req, res) => {
                 password,
                 email,
             });
-        res.status(200).json(updateUser);
+        res.status(200).status(201).json(updateUser);
     } catch (err) {
         res.json(err);
     }
@@ -81,7 +81,7 @@ app.patch('/posts/:userId', async (req, res) => {
         const { text } = req.body;
         const update = await getManager().getRepository(PostEntity)
             .update({ userId: Number(req.params.userId) }, { text });
-        res.status(200).json(update);
+        res.status(200).status(201).json(update);
     } catch (err) {
         res.json(err);
     }
@@ -107,7 +107,7 @@ app.patch('/comments/action', async (req:Request, res:Response) => {
         const { commentId, like, dislike } = req.body;
         const updateLikeDislike = await getManager().getRepository(CommentEntity)
             .update({ authorId: commentId }, { like, dislike });
-        res.status(200).json(updateLikeDislike);
+        res.status(200).status(201).json(updateLikeDislike);
     } catch (err) {
         res.json(err);
     }

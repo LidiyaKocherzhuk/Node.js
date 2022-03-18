@@ -7,7 +7,7 @@ class CommentController {
     public async createComment(req:Request, res:Response): Promise<Response<IComment>> {
         try {
             const comment = await commentService.createComment(req.body);
-            return res.status(200).json(comment);
+            return res.status(201).json(comment);
         } catch (err) {
             return res.json(err);
         }

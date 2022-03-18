@@ -2,10 +2,10 @@ import { getManager } from 'typeorm';
 
 import { IToken, TokenEntity } from '../../entity/tokenEntity';
 import { ITokenRepository } from './tokenRepositoryInterface';
-import { ITokenPair } from '../../interfaces/tokenInterface';
+import { ITokenDataToSave } from '../../interfaces/tokenInterface';
 
 class TokenRepository implements ITokenRepository {
-    public async createToken(token: ITokenPair):Promise<IToken> {
+    public async createToken(token: ITokenDataToSave):Promise<IToken> {
         return getManager().getRepository(TokenEntity).save(token);
     }
 

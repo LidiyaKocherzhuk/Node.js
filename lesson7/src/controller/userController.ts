@@ -36,7 +36,7 @@ class UserController {
     public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
         try {
             const createUser = await userService.createUser(req.body);
-            return res.status(200).json(createUser);
+            return res.status(201).json(createUser);
         } catch (err) {
             return res.json(err);
         }
@@ -47,7 +47,7 @@ class UserController {
             const { password, email } = req.body;
             const { id } = req.params;
             const updateUser = await userService.updateUser(password, email, +id);
-            return res.status(200).json(updateUser);
+            return res.status(200).status(201).json(updateUser);
         } catch (err) {
             return res.json(err);
         }

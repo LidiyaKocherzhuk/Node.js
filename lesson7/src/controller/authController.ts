@@ -14,7 +14,7 @@ class AuthController {
                 maxAge: COOKIE.maxAgeRefreshToken, httpOnly: true,
             },
         );
-        return res.status(200).json(data);
+        return res.status(201).json(data);
     }
 
     // public async login(req:Request, res:Response) {
@@ -27,7 +27,7 @@ class AuthController {
 
         await tokenService.deleteByParams(id);
 
-        return res.status(200).json('ok');
+        return res.status(201).json('ok');
     }
     //
     // public async refresh(req:Request, res:Response) {

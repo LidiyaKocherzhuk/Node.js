@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
 import { IToken } from '../entity/tokenEntity';
 import { tokenRepository } from '../repositories/token/tokenRepository';
-import { ITokenDataToSave, ITokenPair } from '../interfaces/tokenInterface';
+import {ITokenDataToSave, ITokenPair} from '../interfaces/tokenInterface';
 
 class TokenService {
     public async generateTokenPair(payload: ITokenDataToSave): Promise<ITokenPair> {
