@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import {authService, tokenService} from '../services';
+import { authService, tokenService } from '../services';
 import { IRequestExtended } from '../interfaces';
 import { COOKIE } from '../constans/cookie';
 
@@ -14,7 +14,7 @@ class AuthController {
                 maxAge: COOKIE.maxAgeRefreshToken, httpOnly: true,
             },
         );
-        return res.json(data);
+        return res.status(200).json(data);
     }
 
     // public async login(req:Request, res:Response) {
@@ -27,7 +27,7 @@ class AuthController {
 
         await tokenService.deleteByParams(id);
 
-        return res.json('ok');
+        return res.status(200).json('ok');
     }
     //
     // public async refresh(req:Request, res:Response) {

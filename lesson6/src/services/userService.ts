@@ -6,18 +6,15 @@ import { userRepository } from '../repositories/users/userRepository';
 
 class UserService {
     public async getUsers(): Promise<IUser[]> {
-        const users = await userRepository.getUsers();
-        return users;
+        return userRepository.getUsers();
     }
 
     public async getUserById(id: number): Promise<IUser | undefined> {
-        const user = await userRepository.getUserById(id);
-        return user;
+        return userRepository.getUserById(id);
     }
 
     public async getUserByEmail(email:string): Promise<IUser | undefined> {
-        const user = await userRepository.getUserByEmail(email);
-        return user;
+        return userRepository.getUserByEmail(email);
     }
 
     public async createUser(user: IUser): Promise<IUser> {
@@ -25,18 +22,15 @@ class UserService {
         const hashedPassword = await this._hasPassword(password);
         const dataToSave = { ...user, password: hashedPassword };
 
-        const createUser = await userRepository.createUser(dataToSave);
-        return createUser;
+        return userRepository.createUser(dataToSave);
     }
 
     public async updateUser(password: string, email: string, id: number): Promise<UpdateResult> {
-        const updateUser = await userRepository.updateUser(password, email, id);
-        return updateUser;
+        return userRepository.updateUser(password, email, id);
     }
 
-    public async deleteUser(id: number) {
-        const deleteUser = await userRepository.deleteUser(id);
-        return deleteUser;
+    public async deleteUser(id: number): Promise<void> {
+        await userRepository.deleteUser(id);
     }
 
     private async _hasPassword(password: string): Promise<string> {

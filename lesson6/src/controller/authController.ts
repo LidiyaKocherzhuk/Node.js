@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { authService } from '../services/authService';
 
 class AuthController {
@@ -11,7 +12,7 @@ class AuthController {
                 maxAge: 24 * 60 * 60 * 1000, httpOnly: true,
             },
         );
-        return res.json(data);
+        return res.status(200).json(data);
     }
 
     // public async login(req:Request, res:Response) {

@@ -37,8 +37,8 @@ class UserRepository extends Repository<UserEntity> implements IUserRepository {
             });
     }
 
-    public async deleteUser(id: number) {
-        return getManager().getRepository(UserEntity)
+    public async deleteUser(id: number): Promise<void> {
+        await getManager().getRepository(UserEntity)
             .softDelete({ id });
     }
 }
