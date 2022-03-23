@@ -33,14 +33,13 @@ export const userValidator = {
             .regex(regexp.PASSWORD)
             .required(),
     }),
+
     loginUser: Joi.object({
         email: Joi.string()
-            .alphanum()
             .regex(regexp.EMAIL)
             .required(),
 
         password: Joi.string()
-            .alphanum()
             .regex(regexp.PASSWORD)
             .required(),
     }),

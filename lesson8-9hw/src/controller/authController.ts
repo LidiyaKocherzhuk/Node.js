@@ -42,8 +42,8 @@ class AuthController {
                 accessToken,
                 user: req.user,
             });
-        } catch (err) {
-            return res.status(400).json(err);
+        } catch (err:any) {
+            return res.status(404).json(err.message);
         }
     }
 

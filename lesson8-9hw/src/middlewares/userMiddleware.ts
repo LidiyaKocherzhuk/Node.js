@@ -16,7 +16,7 @@ class UserMiddleware {
 
             req.user = userFromDb;
             next();
-        } catch (err) {
+        } catch (err:any) {
             res.status(404).json(err.message);
         }
     }
@@ -33,7 +33,7 @@ class UserMiddleware {
             }
 
             next();
-        } catch (err) {
+        } catch (err:any) {
             res.status(400).json(err.message);
         }
     }
@@ -41,14 +41,13 @@ class UserMiddleware {
     async checkValidCreateUser(req: IRequestExtended, res: Response, next: NextFunction)
         : Promise<void> {
         try {
-            const { error, value } = await userValidator.createUser.validateAsync(req.body);
+            const { error } = await userValidator.createUser.validate(req.body);
             if (error) {
                 throw new Error('Data is not valid');
             }
 
-            req.body(value);
             next();
-        } catch (err) {
+        } catch (err:any) {
             res.status(404).json(err.message);
         }
     }
@@ -56,15 +55,14 @@ class UserMiddleware {
     async checkValidLoginUser(req: IRequestExtended, res: Response, next: NextFunction)
         : Promise<void> {
         try {
-            const { error, value } = await userValidator.loginUser.validate(req.body);
+            const { error } = await userValidator.loginUser.validate(req.body);
 
             if (error) {
                 throw new Error('Data is not valid');
             }
 
-            req.body(value);
             next();
-        } catch (err) {
+        } catch (err:any) {
             res.status(404).json(err.message);
         }
     }
@@ -72,15 +70,14 @@ class UserMiddleware {
     async checkValidParams(req: IRequestExtended, res: Response, next: NextFunction)
         : Promise<void> {
         try {
-            const { error, value } = await paramsValidator.id.validate(req.params);
+            const { error } = await paramsValidator.id.validate(req.params);
 
             if (error) {
                 throw new Error('Data is not valid');
             }
 
-            req.body(value);
             next();
-        } catch (err) {
+        } catch (err:any) {
             res.status(404).json(err.message);
         }
     }

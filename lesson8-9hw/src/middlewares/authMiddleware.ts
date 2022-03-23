@@ -26,7 +26,7 @@ class AuthMiddleware {
 
             next();
         } catch (err: any) {
-            res.status(404).json(err);
+            res.status(404).json(err.message);
         }
     }
 
@@ -51,7 +51,7 @@ class AuthMiddleware {
 
             next();
         } catch (err: any) {
-            res.status(404).json(err);
+            res.status(404).json(err.message);
         }
     }
 }
