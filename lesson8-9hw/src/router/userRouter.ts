@@ -5,26 +5,13 @@ import { userMiddleware } from '../middlewares';
 
 export const userRouter = Router();
 
-userRouter.get(
+userRouter.get('/', userController.getUsers);
+userRouter.get('/:id', userController.getUserById);
+userRouter.get('/:email', userController.getUserByEmail);
+userRouter.post(
     '/',
-    userController.getUsers,
+    userMiddleware.checkIsUserUniqueForCreate,
+    userController.createUser,
 );
-
-userRouter.get(
-    '/:id',
-    userMiddleware.checkValidParams,
-    userController.getUserById,
-);
-
-userRouter.patch(
-    '/:id',
-    userMiddleware.checkValidParams,
-    userMiddleware.checkValidLoginUpdateUser,
-    userController.updateUser,
-);
-
-userRouter.delete(
-    '/:id',
-    userMiddleware.checkValidParams,
-    userController.deleteUser,
-);
+userRouter.patch('/:id', userController.updateUser);
+userRouter.delete('/:id', userController.deleteUser);

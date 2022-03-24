@@ -34,7 +34,7 @@ export const userValidator = {
             .required(),
     }),
 
-    loginUpdateUser: Joi.object({
+    loginUser: Joi.object({
         email: Joi.string()
             .regex(regexp.EMAIL)
             .required(),

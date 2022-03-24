@@ -1,20 +1,22 @@
 import { Router } from 'express';
+import { celebrate } from 'celebrate';
 
 import { authController } from '../controller';
 import { authMiddleware, userMiddleware } from '../middlewares';
+import { userValidator } from '../validator';
 
 export const authRouter = Router();
 
 authRouter.post(
     '/registration',
-    userMiddleware.checkValidCreateUser,
+    celebrate(userValidator.createUser),
     userMiddleware.checkIsUserUniqueForCreate,
     authController.registration,
 );
 
 authRouter.post(
     '/login',
-    userMiddleware.checkValidLoginUser,
+    celebrate(userValidator.loginUpdateUser),
     userMiddleware.checkIfUserExists,
     authController.login,
 );
