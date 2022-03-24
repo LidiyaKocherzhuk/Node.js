@@ -14,7 +14,7 @@ authRouter.post(
 
 authRouter.post(
     '/login',
-    userMiddleware.checkValidLoginUser,
+    userMiddleware.checkValidLoginUpdateUser,
     userMiddleware.checkIfUserExists,
     authController.login,
 );

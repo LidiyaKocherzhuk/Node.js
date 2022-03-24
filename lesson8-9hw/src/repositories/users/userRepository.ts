@@ -19,10 +19,7 @@ class UserRepository extends Repository<UserEntity> implements IUserRepository {
     }
 
     public async getUserByEmail(email: string): Promise<IUser | undefined> {
-        return getManager().getRepository(UserEntity)
-            .createQueryBuilder('user')
-            .where('user.email = :email', { email })
-            .getOne();
+        return getManager().getRepository(UserEntity).findOne(email);
     }
 
     public async getUserByParams(findUser: Partial<IUser>): Promise<IUser | undefined> {
@@ -41,9 +38,9 @@ class UserRepository extends Repository<UserEntity> implements IUserRepository {
             });
     }
 
-    public async deleteUser(id: number) {
-        return getManager().getRepository(UserEntity)
-            .softDelete({ id });
+    public async deleteUser(id: number): Promise<void> {
+        await getManager().getRepository(UserEntity)
+            .softDelete(id);
     }
 }
 

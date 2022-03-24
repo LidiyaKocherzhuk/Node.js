@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { authService, tokenService, userService } from '../services';
 import { IRequestExtended, ITokenData, ITokenWithUser } from '../interfaces';
-import { COOKIE, constants } from '../constans';
+import { constants } from '../constans';
 import { IUser } from '../entity';
 import { tokenRepository } from '../repositories/token/tokenRepository';
 
@@ -10,13 +10,7 @@ class AuthController {
     public async registration(req: Request, res: Response): Promise<Response<ITokenData>> {
         try {
             const data = await authService.registration(req.body);
-            res.cookie(
-                COOKIE.nameRefreshToken,
-                data.refreshToken,
-                {
-                    maxAge: COOKIE.maxAgeRefreshToken, httpOnly: true,
-                },
-            );
+
             return res.status(201).json(data);
         } catch (err:any) {
             return res.status(err);

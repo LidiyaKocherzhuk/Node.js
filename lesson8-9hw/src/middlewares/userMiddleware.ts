@@ -52,10 +52,10 @@ class UserMiddleware {
         }
     }
 
-    async checkValidLoginUser(req: IRequestExtended, res: Response, next: NextFunction)
+    async checkValidLoginUpdateUser(req: IRequestExtended, res: Response, next: NextFunction)
         : Promise<void> {
         try {
-            const { error } = await userValidator.loginUser.validate(req.body);
+            const { error } = await userValidator.loginUpdateUser.validate(req.body);
 
             if (error) {
                 throw new Error('Data is not valid');
