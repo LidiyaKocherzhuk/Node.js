@@ -7,11 +7,5 @@ export const userRouter = Router();
 
 userRouter.get('/', userController.getUsers);
 userRouter.get('/:id', userController.getUserById);
-userRouter.get('/:email', userController.getUserByEmail);
-userRouter.post(
-    '/',
-    userMiddleware.checkIsUserUniqueForCreate,
-    userController.createUser,
-);
-userRouter.patch('/:id', userController.updateUser);
-userRouter.delete('/:id', userController.deleteUser);
+userRouter.patch('/:id', userMiddleware.checkValidParams, userController.updateUser);
+userRouter.delete('/:id', userMiddleware.checkValidParams, userController.deleteUser);

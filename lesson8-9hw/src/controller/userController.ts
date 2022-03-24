@@ -23,25 +23,6 @@ class UserController {
         }
     }
 
-    public async getUserByEmail(req: Request, res: Response) {
-        try {
-            const { email } = req.params;
-            const user = await userService.getUserByEmail(email);
-            return res.status(200).json(user);
-        } catch (err) {
-            return res.json(err);
-        }
-    }
-
-    public async createUser(req: Request, res: Response): Promise<Response<IUser>> {
-        try {
-            const createUser = await userService.createUser(req.body);
-            return res.status(201).json(createUser);
-        } catch (err) {
-            return res.json(err);
-        }
-    }
-
     public async updateUser(req: Request, res: Response):Promise<Response<IUser>> {
         try {
             const { password, email } = req.body;
