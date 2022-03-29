@@ -5,8 +5,11 @@ import { IRequestExtended } from '../interfaces';
 import { ErrorHandler } from '../error/errorHandler';
 
 class UserMiddleware {
-    async checkIfUserExists(req: IRequestExtended, res: Response, next: NextFunction)
-        : Promise<void> {
+    async checkIfUserExists(
+        req: IRequestExtended,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
         try {
             const userFromDb = await userService.getUserByEmail(req.body.email);
 
@@ -22,8 +25,11 @@ class UserMiddleware {
         }
     }
 
-    async checkIsUserUniqueForCreate(req: IRequestExtended, res: Response, next: NextFunction)
-        : Promise<void> {
+    async checkIsUserUniqueForCreate(
+        req: IRequestExtended,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
         try {
             const { email, phone } = req.body;
 
