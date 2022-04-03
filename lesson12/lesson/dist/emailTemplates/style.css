@@ -1,0 +1,12 @@
+.header {
+    border-bottom: 1px solid black;
+    background: #eaeaea;
+}
+.content {
+    height: 100px;
+    color: #28dc1b;
+}
+.footer {
+    border-top: 1px solid black;
+    background: #cbcbcb;
+}

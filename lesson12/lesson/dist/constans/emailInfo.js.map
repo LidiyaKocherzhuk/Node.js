@@ -1,0 +1,1 @@
+{"version":3,"file":"emailInfo.js","sourceRoot":"","sources":["../../src/constans/emailInfo.ts"],"names":[],"mappings":";;;AAAA,mCAA0C;AAE7B,QAAA,SAAS,GAAG;IACrB,CAAC,uBAAe,CAAC,OAAO,CAAC,EAAE;QACvB,OAAO,EAAE,iBAAiB;QAC1B,YAAY,EAAE,SAAS;KAC1B;IACD,CAAC,uBAAe,CAAC,eAAe,CAAC,EAAE;QAC/B,OAAO,EAAE,iBAAiB;QAC1B,YAAY,EAAE,iBAAiB;KAClC;CACJ,CAAC"}
