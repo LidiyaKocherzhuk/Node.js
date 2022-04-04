@@ -8,14 +8,12 @@ export const showNewUsers = () => {
     cron.schedule('*/10 * * * * *', async () => {
         const users = await userService.getNewUsers();
 
-        await Promise.all(users).then((response: IUser[]) => response.forEach(
-            (user: IUser) => emailService.sendMail(
-                user.email,
-                EmailActionEnum.WELCOME,
-                {
-                    userName: user.firstName,
-                },
-            ),
+        const promises = users.map((user: IUser) => emailService.sendMail(
+            user.email,
+            EmailActionEnum.WELCOME,
+            { userName: user.firstName },
         ));
+
+        await Promise.all(promises);
     });
 };

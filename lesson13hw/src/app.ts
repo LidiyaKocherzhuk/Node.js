@@ -1,12 +1,12 @@
 // @ts-ignore
-global.rootDir = __dirname;
-
 import express from 'express';
 import { createConnection } from 'typeorm';
 
 import { apiRouter } from './router';
 import { config } from './config';
 import { Cron } from './cron';
+
+global.rootDir = __dirname;
 
 const app = express();
 app.use(express.json());
