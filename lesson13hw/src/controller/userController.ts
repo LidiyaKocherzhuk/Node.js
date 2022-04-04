@@ -35,7 +35,7 @@ class UserController {
         try {
             const { id } = req.params;
             await userService.deleteUser(+id);
-            res.status(204);
+            res.sendStatus(204);
         } catch (err) {
             res.json(err);
         }

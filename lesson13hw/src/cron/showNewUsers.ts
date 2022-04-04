@@ -1,10 +1,20 @@
 import cron from 'node-cron';
-import { userService } from '../services';
+
+import { emailService, userService } from '../services';
+import { EmailActionEnum } from '../constans';
 
 export const showNewUsers = () => {
     cron.schedule('*/10 * * * * *', async () => {
-        console.log('Runn');
         const users = await userService.getNewUsers();
-        console.log(users);
+
+        if (users) {
+            await users.forEach((user) => emailService.sendMail(
+                user.email,
+                EmailActionEnum.WELCOME,
+                {
+                    userName: user.firstName,
+                },
+            ));
+        }
     });
 };
