@@ -1,7 +1,7 @@
 import { Column, Entity } from 'typeorm';
 
 import { CommonFields, ICommonFields } from './commonFields';
-import { config } from '../config/config';
+import { config } from '../config';
 
 export interface IUser extends ICommonFields{
     firstName: string;

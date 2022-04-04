@@ -6,13 +6,31 @@ import utc from 'dayjs/plugin/utc';
 
 import { IUser, UserEntity } from '../../entity';
 import { IUserRepository } from './userRepositoryInterface';
+import { IPaginationResponse } from '../../interfaces';
 
 dayjs.extend(utc);
 
 @EntityRepository(UserEntity)
 class UserRepository extends Repository<UserEntity> implements IUserRepository {
-    public async getUsers(): Promise<IUser[]> {
-        return getManager().getRepository(UserEntity).find();
+    public async getUsersPagination(
+        searchObject: any,
+        page: number,
+        skip: number,
+        take: number,
+    )
+    : Promise<IPaginationResponse<IUser>> {
+        const [responseData, itemCount] = await getManager()
+            .getRepository(UserEntity)
+            .findAndCount({
+                where: searchObject, skip, take,
+            });
+
+        return {
+            page,
+            perPage: take,
+            itemCount,
+            data: responseData,
+        };
     }
 
     public async getUserById(id: number): Promise<IUser | undefined> {
@@ -44,15 +62,6 @@ class UserRepository extends Repository<UserEntity> implements IUserRepository {
 
     public async createUser(user: IUser): Promise<IUser> {
         return getManager().getRepository(UserEntity).save(user);
-    }
-
-    public async updateUser(user: Partial<IUser>, id: number): Promise<UpdateResult> {
-        const { password, email } = user;
-        return getManager().getRepository(UserEntity)
-            .update({ id }, {
-                password,
-                email,
-            });
     }
 
     public async updateUserPass(user: Partial<IUser>): Promise<UpdateResult> {

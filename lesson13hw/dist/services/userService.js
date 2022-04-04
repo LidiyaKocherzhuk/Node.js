@@ -7,8 +7,9 @@ exports.userService = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const repositories_1 = require("../repositories");
 class UserService {
-    async getUsers() {
-        return repositories_1.userRepository.getUsers();
+    async getUsersPagination(other, page, perPage) {
+        const skip = perPage * (page - 1);
+        return repositories_1.userRepository.getUsersPagination(other, page, skip, perPage);
     }
     async getUserById(id) {
         return repositories_1.userRepository.getUserById(id);
@@ -27,14 +28,6 @@ class UserService {
         const hashedPassword = await this._hasPassword(password);
         const dataToSave = { ...user, password: hashedPassword };
         return repositories_1.userRepository.createUser(dataToSave);
-    }
-    async updateUser(user, id) {
-        const { password } = user;
-        if (!password) {
-            throw new Error('Wrong data!!!');
-        }
-        const hashedPassword = await this._hasPassword(password);
-        return repositories_1.userRepository.updateUser({ password: hashedPassword, email: user.email }, id);
     }
     async updateUserPass(user) {
         const { password, id } = user;

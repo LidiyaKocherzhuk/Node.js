@@ -2,13 +2,20 @@ import { Request, Response } from 'express';
 
 import { IUser } from '../entity';
 import { userService } from '../services';
-import { IRequestExtended } from '../interfaces';
+import { IPaginationResponse } from '../interfaces';
 
 class UserController {
-    public async getUsers(req: Request, res: Response): Promise<Response<IUser[]>> {
+    public async getUsersPagination(
+        req: Request,
+        res: Response,
+    )
+        : Promise<Response<IPaginationResponse<IUser>>> {
         try {
-            const users = await userService.getUsers();
-            return res.status(200).json(users);
+            const { page = 1, perPage = 20, ...other } = req.query;
+
+            const responseData = await userService.getUsersPagination(other, +page, +perPage);
+
+            return res.status(200).json(responseData);
         } catch (err) {
             return res.json(err);
         }
@@ -19,17 +26,6 @@ class UserController {
             const { id } = req.params;
             const user = await userService.getUserById(+id);
             return res.status(200).json(user);
-        } catch (err) {
-            return res.json(err);
-        }
-    }
-
-    public async updateUser(req: IRequestExtended, res: Response):Promise<Response<IUser>> {
-        try {
-            const { password, email } = req.body as IUser;
-            const { id } = req.params;
-            const updateUser = await userService.updateUser({ password, email }, +id);
-            return res.status(200).status(201).json(updateUser);
         } catch (err) {
             return res.json(err);
         }

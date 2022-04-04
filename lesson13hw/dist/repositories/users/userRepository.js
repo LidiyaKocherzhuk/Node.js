@@ -16,8 +16,18 @@ const utc_1 = __importDefault(require("dayjs/plugin/utc"));
 const entity_1 = require("../../entity");
 dayjs_1.default.extend(utc_1.default);
 let UserRepository = class UserRepository extends typeorm_1.Repository {
-    async getUsers() {
-        return (0, typeorm_1.getManager)().getRepository(entity_1.UserEntity).find();
+    async getUsersPagination(searchObject, page, skip, take) {
+        const [responseData, itemCount] = await (0, typeorm_1.getManager)()
+            .getRepository(entity_1.UserEntity)
+            .findAndCount({
+            where: searchObject, skip, take,
+        });
+        return {
+            page,
+            perPage: take,
+            itemCount,
+            data: responseData,
+        };
     }
     async getUserById(id) {
         return (0, typeorm_1.getManager)().getRepository(entity_1.UserEntity)
@@ -44,14 +54,6 @@ let UserRepository = class UserRepository extends typeorm_1.Repository {
     }
     async createUser(user) {
         return (0, typeorm_1.getManager)().getRepository(entity_1.UserEntity).save(user);
-    }
-    async updateUser(user, id) {
-        const { password, email } = user;
-        return (0, typeorm_1.getManager)().getRepository(entity_1.UserEntity)
-            .update({ id }, {
-            password,
-            email,
-        });
     }
     async updateUserPass(user) {
         const { password, id } = user;

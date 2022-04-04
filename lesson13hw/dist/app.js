@@ -9,7 +9,7 @@ const express_1 = __importDefault(require("express"));
 const typeorm_1 = require("typeorm");
 const router_1 = require("./router");
 const config_1 = require("./config");
-const cron_1 = require("./cron");
+// import { Cron } from './cron';
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -29,7 +29,7 @@ app.listen(PORT, async () => {
         const connection = await (0, typeorm_1.createConnection)();
         if (connection) {
             console.log('database connected');
-            (0, cron_1.Cron)();
+            // Cron();
         }
     }
     catch (err) {

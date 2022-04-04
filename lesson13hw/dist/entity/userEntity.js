@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
 const typeorm_1 = require("typeorm");
 const commonFields_1 = require("./commonFields");
-const config_1 = require("../config/config");
+const config_1 = require("../config");
 let UserEntity = class UserEntity extends commonFields_1.CommonFields {
 };
 __decorate([

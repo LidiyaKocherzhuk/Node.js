@@ -3,10 +3,18 @@ import bcrypt from 'bcrypt';
 
 import { IUser } from '../entity';
 import { userRepository } from '../repositories';
+import { IPaginationResponse } from '../interfaces';
 
 class UserService {
-    public async getUsers(): Promise<IUser[]> {
-        return userRepository.getUsers();
+    public async getUsersPagination(
+        other: any,
+        page: number,
+        perPage: number,
+    )
+        : Promise<IPaginationResponse<IUser>> {
+        const skip = perPage * (page - 1);
+
+        return userRepository.getUsersPagination(other, page, skip, perPage);
     }
 
     public async getUserById(id: number): Promise<IUser | undefined> {
@@ -31,17 +39,6 @@ class UserService {
         const dataToSave = { ...user, password: hashedPassword };
 
         return userRepository.createUser(dataToSave);
-    }
-
-    public async updateUser(user: Partial<IUser>, id: number): Promise<UpdateResult> {
-        const { password } = user;
-
-        if (!password) {
-            throw new Error('Wrong data!!!');
-        }
-        const hashedPassword = await this._hasPassword(password);
-
-        return userRepository.updateUser({ password: hashedPassword, email: user.email }, id);
     }
 
     public async updateUserPass(user: Partial<IUser>): Promise<UpdateResult> {

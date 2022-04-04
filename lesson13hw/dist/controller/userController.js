@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userController = void 0;
 const services_1 = require("../services");
 class UserController {
-    async getUsers(req, res) {
+    async getUsersPagination(req, res) {
         try {
-            const users = await services_1.userService.getUsers();
-            return res.status(200).json(users);
+            const { page = 1, perPage = 20, ...other } = req.query;
+            const responseData = await services_1.userService.getUsersPagination(other, +page, +perPage);
+            return res.status(200).json(responseData);
         }
         catch (err) {
             return res.json(err);
@@ -17,17 +18,6 @@ class UserController {
             const { id } = req.params;
             const user = await services_1.userService.getUserById(+id);
             return res.status(200).json(user);
-        }
-        catch (err) {
-            return res.json(err);
-        }
-    }
-    async updateUser(req, res) {
-        try {
-            const { password, email } = req.body;
-            const { id } = req.params;
-            const updateUser = await services_1.userService.updateUser({ password, email }, +id);
-            return res.status(200).status(201).json(updateUser);
         }
         catch (err) {
             return res.json(err);
