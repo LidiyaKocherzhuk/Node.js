@@ -18,7 +18,7 @@ class UserRepository extends Repository<UserEntity> implements IUserRepository {
         skip: number,
         take: number,
     )
-    : Promise<IPaginationResponse<IUser>> {
+        : Promise<IPaginationResponse<IUser>> {
         const [responseData, itemCount] = await getManager()
             .getRepository(UserEntity)
             .findAndCount({
@@ -51,11 +51,14 @@ class UserRepository extends Repository<UserEntity> implements IUserRepository {
         return getManager().getRepository(UserEntity).findOne(findUser);
     }
 
-    public async getNewUsers(): Promise<IUser[]> {
+    public getNewUsers(): Promise<IUser[]> {
         return getManager().getRepository(UserEntity)
             .createQueryBuilder('user')
-            .where('user.createdAt >= :date', {
-                date: dayjs().utc().startOf('day').format(),
+            .where('user.createdAt >= :data', {
+                data: dayjs()
+                    .subtract(3, 'h')
+                    .subtract(10, 's')
+                    .format(),
             })
             .getMany();
     }

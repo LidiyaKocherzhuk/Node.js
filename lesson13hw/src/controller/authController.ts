@@ -8,7 +8,7 @@ import {
 } from '../services';
 import { IRequestExtended, ITokenData, ITokenWithUser } from '../interfaces';
 import {
-    COOKIE, constants,
+    constants,
     ActionTokenType,
     EmailActionEnum,
 } from '../constans';
@@ -19,17 +19,8 @@ class AuthController {
     public async registration(req: Request, res: Response): Promise<Response<ITokenData>> {
         try {
             const data = await authService.registration(req.body);
-            console.log(data);
-            res.cookie(
-                COOKIE.nameRefreshToken,
-                data.refreshToken,
-                {
-                    maxAge: COOKIE.maxAgeRefreshToken, httpOnly: true,
-                },
-            );
             return res.status(201).json(data);
         } catch (err:any) {
-            console.log(err);
             return res.status(401).json(err);
         }
     }

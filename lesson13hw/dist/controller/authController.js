@@ -8,14 +8,9 @@ class AuthController {
     async registration(req, res) {
         try {
             const data = await services_1.authService.registration(req.body);
-            console.log(data);
-            res.cookie(constans_1.COOKIE.nameRefreshToken, data.refreshToken, {
-                maxAge: constans_1.COOKIE.maxAgeRefreshToken, httpOnly: true,
-            });
             return res.status(201).json(data);
         }
         catch (err) {
-            console.log(err);
             return res.status(401).json(err);
         }
     }

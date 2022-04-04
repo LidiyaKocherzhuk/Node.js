@@ -44,11 +44,14 @@ let UserRepository = class UserRepository extends typeorm_1.Repository {
     async getUserByParams(findUser) {
         return (0, typeorm_1.getManager)().getRepository(entity_1.UserEntity).findOne(findUser);
     }
-    async getNewUsers() {
+    getNewUsers() {
         return (0, typeorm_1.getManager)().getRepository(entity_1.UserEntity)
             .createQueryBuilder('user')
-            .where('user.createdAt >= :date', {
-            date: (0, dayjs_1.default)().utc().startOf('day').format(),
+            .where('user.createdAt >= :data', {
+            data: (0, dayjs_1.default)()
+                .subtract(3, 'h')
+                .subtract(10, 's')
+                .format(),
         })
             .getMany();
     }

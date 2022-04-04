@@ -6,7 +6,6 @@ const tokenService_1 = require("./tokenService");
 class AuthService {
     async registration(body) {
         const createUser = await userService_1.userService.createUser(body);
-        console.log(createUser);
         return this._getTokenData(createUser);
     }
     async _getTokenData(userData) {

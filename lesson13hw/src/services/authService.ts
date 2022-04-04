@@ -6,7 +6,6 @@ import { ITokenData } from '../interfaces';
 class AuthService {
     public async registration(body: IUser): Promise<ITokenData> {
         const createUser = await userService.createUser(body);
-        console.log(createUser);
 
         return this._getTokenData(createUser);
     }

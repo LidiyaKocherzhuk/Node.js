@@ -29,7 +29,7 @@ class UserService {
         return userRepository.getUserByParams(findUser);
     }
 
-    public async getNewUsers(): Promise<IUser[] | undefined> {
+    public async getNewUsers(): Promise<IUser[]> {
         return userRepository.getNewUsers();
     }
 
