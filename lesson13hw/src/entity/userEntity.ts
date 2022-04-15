@@ -1,7 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne} from 'typeorm';
 
 import { CommonFields, ICommonFields } from './commonFields';
 import { config } from '../config';
+import {RoomEntity} from "../../../lesson15hw/socketChat/src/entity/roomEntity";
 
 export interface IUser extends ICommonFields{
     firstName: string;
@@ -55,4 +56,8 @@ export class UserEntity extends CommonFields implements IUser {
         nullable: false,
     })
         password: string;
+
+    @ManyToOne(() => RoomEntity)
+    @JoinColumn({ name: 'roomId' })
+        room: RoomEntity;
 }

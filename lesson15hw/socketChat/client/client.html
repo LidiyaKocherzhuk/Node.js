@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+            integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="wrap">
+
+    <div class="formLogin">
+        <form name="login">
+            <input id="userName" type="text">
+            <input id="userEmail" type="email">
+            <input id="login" type="button" value="LOGIN">
+        </form>
+    </div>
+
+    <div class="chat chatStyle">
+        <div class="rooms">
+            <button id="join1">JOIN ROOM1</button>
+            <button id="join2">JOIN ROOM2</button>
+        </div>
+
+        <div id="messageBlock">
+            <div id="userInfo"></div>
+
+            <div id="room">
+
+                <form id="formMessage">
+                    <input id="messageValue" type="text">
+                    <button id="returnMessage">SEND</button>
+                </form>
+
+                <div id="messages"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    //GET TAGS...
+    const loginForm = document.getElementsByClassName('formLogin')[0];
+    const btnLogin = document.getElementById('login');
+    const inputUserName = document.getElementById('userName');
+    const inputUserEmail = document.getElementById('userEmail');
+
+    const chat = document.getElementsByClassName('chat')[0];
+    const join1 = document.getElementById('join1');
+    const join2 = document.getElementById('join2');
+
+    const btnReturn = document.getElementById('returnMessage');
+    const messageValue = document.getElementById('messageValue');
+    const messages = document.getElementById('messages');
+    const userInfo = document.getElementById('userInfo');
+
+    //SOCKET CONNECTION...
+    const socket = io('http://localhost:5900');
+    const room = {};
+
+    //GET && RESPONSE VALUE....
+    btnLogin.onclick = (e) => {
+        e.preventDefault();
+        loginForm.classList.toggle('loginNone');
+        chat.classList.toggle('show');
+        socket.emit('login', {userName: inputUserName.value, email: inputUserEmail.value});
+        inputUserName.value = "";
+        inputUserEmail.value = "";
+    }
+
+    join1.onclick = (e) => {
+        e.preventDefault();
+        messages.innerHTML = '';
+        room.id = 1;
+        socket.emit('join_room', {id: 1});
+    };
+
+    join2.onclick = (e) => {
+        e.preventDefault();
+        messages.innerHTML = '';
+        room.id = 2;
+        socket.emit('join_room', {id: 2});
+    }
+
+    socket.on('message:get-all', (data) => {
+        postUserInfo(data.user);
+        for (const item of data.messages) {
+            createBlocMessages(item, data.user);
+        }
+    })
+
+    socket.on('user_join_room', (data) => {
+        postUserInfo(data.user);
+        createBlocMessages(data.message, data.user);
+    })
+
+    btnReturn.onclick = (e) => {
+        e.preventDefault();
+        socket.emit('send:data', {message: messageValue.value, roomNum: room.id});
+        messageValue.value = "";
+    };
+
+    socket.on('return:message', (data) => {
+        postUserInfo(data.user);
+        createBlocMessages(data.message, data.user);
+    });
+
+    const createBlocMessages = (mess, user) => {
+        const userSymbols = user.userName[0] + user.email[0]
+        const messageDivElement = document.createElement('div');
+        messageDivElement.classList.add('itemMessage')
+        messageDivElement.innerHTML = `<h3>${mess.message}</h3><div class="icon">${userSymbols.toUpperCase()}</div>`;
+        messages.appendChild(messageDivElement)
+    };
+
+    const postUserInfo = (data) => {
+        const { userName, email, roomId } = data;
+        const userSymbols = userName[0] + email[0]
+
+        userInfo.innerHTML = `<h5>ROOM: ${roomId}</h5><div class="icon">${userSymbols.toUpperCase()}</div><h2>${userName}</h2>`;
+    }
+
+</script>
+
+</body>
+</html>

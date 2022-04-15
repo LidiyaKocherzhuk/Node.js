@@ -36,6 +36,7 @@ class AuthController {
         try {
             const { id, email, password: hashPassword } = req.user as IUser;
             const { password } = req.body;
+            console.log(req.body);
 
             await userService.compareUserPassword(password, hashPassword);
 
