@@ -20,8 +20,8 @@ io.on('connection', async (socket) => {
     console.log(socket.id);
     connect.push(...connect, { id: socket.id });
 
-    socket.on('disconnect', (data) => {
-        connect.splice(connect.indexOf(data), 1);
+    socket.on('disconnect', () => {
+        connect.splice(connect.indexOf(socket.id), 1);
         console.log(`disconnect ${socket.id}`);
     });
 
